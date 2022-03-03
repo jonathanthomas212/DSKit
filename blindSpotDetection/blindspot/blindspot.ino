@@ -15,9 +15,14 @@
 ******************************************************************************/
 #include "LIDARLite_v4LED.h"
 
+
 LIDARLite_v4LED myLIDAR; //Click here to get the library: http://librarymanager/All#SparkFun_LIDARLitev4 by SparkFun
 
 void setup() {
+  //manually reset board
+  digitalWrite(4, HIGH);
+  delay(200); 
+  pinMode(4, OUTPUT);
   Serial.begin(115200);
   Serial.println("Qwiic LIDARLite_v4 examples");
   Wire.begin(); //Join I2C bus
@@ -29,7 +34,7 @@ void setup() {
   }
   Serial.println("LIDAR acknowledged!");
   //pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(5, OUTPUT);
+  pinMode(7, OUTPUT);
 }
 
 void loop() {
@@ -49,9 +54,9 @@ void loop() {
 
 
   if (newDistance/100 < 2.05) {
-    digitalWrite(5, HIGH);
+    digitalWrite(7, HIGH);
   } else {
-    digitalWrite(5, LOW);
+    digitalWrite(7, LOW);
   }
   delay(20);
 //  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
