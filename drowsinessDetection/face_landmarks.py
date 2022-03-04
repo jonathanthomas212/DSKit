@@ -8,9 +8,11 @@ import pygame
 pygame.mixer.init()
 pygame.mixer.music.load('windows.mp3')
 import RPi.GPIO as GPIO
-pin = 4
+pin4 = 4
+pin21 = 21
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(pin, GPIO.OUT)
+GPIO.setup(pin4, GPIO.OUT)
+GPIO.setup(pin21, GPIO.OUT)
 
 class FaceLandmarks:
     def __init__(self):
@@ -50,14 +52,15 @@ class FaceLandmarks:
             self.hCOUNTER += 1
             if self.hCOUNTER >= 20:
                 cv2.putText(self.frame,"SLEEP!!!",(face_coords[0],face_coords[1]-10),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),3)
-                #turn on led
-                GPIO.output(pin, GPIO.HIGH)
+                #turn on led and buzzer
+                GPIO.output(pin4, GPIO.HIGH)
+                GPIO.output(pin21, GPIO.HIGH)
                 sleep(0.2)
-                GPIO.output(pin, GPIO.LOW)
+                GPIO.output(pin4, GPIO.LOW)
+                GPIO.output(pin21, GPIO.LOW)
 
                 #play sound
-                #playsound('windows.mp3')
-                pygame.mixer.music.play()
+                #pygame.mixer.music.play()
         else:
             if self.hCOUNTER >= 3:
                 self.hTOTAL += 1
@@ -72,13 +75,14 @@ class FaceLandmarks:
             if self.COUNTER >= 20:
                 cv2.putText(self.frame, "SLEEP!!!", (face_coords[0], face_coords[1]-10),cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
             #turn on led
-                GPIO.output(pin, GPIO.HIGH)
+                GPIO.output(pin4, GPIO.HIGH)
+                GPIO.output(pin21, GPIO.HIGH)
                 sleep(0.2)
-                GPIO.output(pin, GPIO.LOW)
+                GPIO.output(pin4, GPIO.LOW)
+                GPIO.output(pin21, GPIO.LOW)
 
                 #play sound
-                #playsound('windows.mp3')
-                pygame.mixer.music.play()
+                #pygame.mixer.music.play()
         else:
             # If it is less than the threshold 3 times in a row, it means that an eye blink has been performed
             if self.COUNTER >= 3:# Threshold: 3
